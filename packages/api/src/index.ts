@@ -1,6 +1,8 @@
 import "dotenv/config";
 import Fastify from "fastify";
 import authRoutes from "./routes/auth";
+import mailRoutes from "./routes/mail";
+import accountRoutes from "./routes/accounts";
 import {
   serializerCompiler,
   validatorCompiler,
@@ -26,6 +28,8 @@ fastify.get("/", async (request, reply) => {
 
 // Register auth routes
 fastify.register(authRoutes, { prefix: "/auth" });
+fastify.register(mailRoutes);
+fastify.register(accountRoutes);
 
 const start = async () => {
   try {

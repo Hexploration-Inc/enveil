@@ -1,4 +1,4 @@
-import { OAuth2Client } from "google-auth-library";
+import { google } from "googleapis";
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
@@ -9,7 +9,7 @@ if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) {
 }
 
 // Create a new OAuth2 client with the credentials
-export const oauth2Client = new OAuth2Client(
+export const oauth2Client = new google.auth.OAuth2(
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
   REDIRECT_URI

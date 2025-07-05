@@ -8,10 +8,10 @@ import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { Account } from "../schemas/account";
 import { encrypt } from "../lib/crypto";
 import { randomUUID } from "crypto";
+import { addAccount } from "../services/account.service";
 
 // This route now manages the account list.
 // In the future, this should be a proper database service.
-const accounts: Account[] = [];
 
 const callbackQuerySchema = z.object({
   code: z.string(),
@@ -79,13 +79,9 @@ export default async function (
         };
 
         // 5. Save the account
-        accounts.push(newAccount);
-        console.log("Successfully added Google account:", newAccount.email);
-        console.log("Current Accounts:", accounts);
+        addAccount(newAccount);
 
-        return reply.redirect(
-          "http://localhost:3000/connect/account?success=true"
-        );
+        return reply.redirect("http://localhost:3000/");
       } catch (error: any) {
         fastify.log.error("Failed to exchange code for tokens:", error.message);
         return reply.redirect(
