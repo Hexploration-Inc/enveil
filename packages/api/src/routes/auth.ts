@@ -1,14 +1,12 @@
 import { FastifyInstance, FastifyPluginOptions } from "fastify";
-import {
-  getGoogleAuthURL,
-  oauth2Client,
-} from "../services/google-auth.service";
+import { getGoogleAuthURL } from "../services/google-auth.service";
 import { z } from "zod";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { Account } from "../schemas/account";
 import { encrypt } from "../lib/crypto";
 import { randomUUID } from "crypto";
 import { addAccount } from "../services/account.service";
+import { google } from "googleapis";
 
 // This route now manages the account list.
 // In the future, this should be a proper database service.
@@ -41,11 +39,18 @@ export default async function (
       const { code } = callbackQuerySchema.parse(request.query);
 
       try {
+        // Create a new, temporary client for this one-time code exchange.
+        const oauth2Client = new google.auth.OAuth2(
+          process.env.GOOGLE_CLIENT_ID,
+          process.env.GOOGLE_CLIENT_SECRET,
+          "http://localhost:3001/auth/google/callback"
+        );
+
         // 1. Exchange the authorization code for tokens
         const { tokens } = await oauth2Client.getToken(code);
         oauth2Client.setCredentials(tokens);
 
-        // 2. Use tokens to get user's profile info. This is our validation.
+        // 2. Use tokens to get user's profile info to confirm identity.
         const { data: userInfo } = await oauth2Client.request<{
           name: string;
           email: string;
@@ -54,10 +59,6 @@ export default async function (
         if (!userInfo || !userInfo.email) {
           throw new Error("Failed to fetch user info from Google.");
         }
-        console.log(
-          "Successfully validated token by fetching user info:",
-          userInfo.email
-        );
 
         // 3. Encrypt the tokens for secure storage
         if (!tokens.access_token || !tokens.refresh_token) {
