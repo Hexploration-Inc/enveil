@@ -13,15 +13,32 @@ This is a monorepo managed with `pnpm` workspaces.
 
 ### Ⅰ. Core & Foundational Features
 
-These are the absolute essentials for any modern email client.
+These are the absolute essentials for any modern email client. Our initial focus is on perfecting the Google account experience before expanding to other providers.
 
-- **Multi-Account Support**: Connect to any email provider with IMAP and SMTP.
-- **Cross-Platform Sync**: Seamless experience across desktop (Windows, macOS, Linux) and mobile (iOS, Android).
-- **Offline Mode**: Read, queue replies, and search your email even without an internet connection.
-- **Rock-Solid Performance**: A fast, responsive, and reliable user experience is non-negotiable.
-- **Unified Inbox**: A single, consolidated view for all your email accounts.
-- **Full-Fledged Calendar**: Integrated calendar with support for multiple accounts, event creation, and meeting scheduling.
-- **Contact Management**: A built-in address book that syncs with your accounts.
+- **Google Account Integration**:
+
+  - Start with first-class support for Gmail, Google Calendar, and Google Contacts.
+  - Future support for any IMAP/SMTP provider.
+
+- **Core Email Client**:
+
+  - View emails, with support for threaded conversations.
+  - Compose, reply, and forward with ease.
+  - Mark as read/unread, star, snooze, archive, and delete.
+  - Full label management (create, edit, color-code).
+  - Unified Inbox to see all your mail in one place.
+  - Preview, download, and add attachments.
+  - Powerful and fast email search.
+
+- **Platform & Performance**:
+
+  - **Cross-Platform Sync**: Seamless experience across desktop (Windows, macOS, Linux) and mobile (iOS, Android).
+  - **Offline Mode**: Read, queue replies, and search your email even without an internet connection.
+  - **Rock-Solid Performance**: A fast, responsive, and reliable user experience is non-negotiable.
+
+- **Productivity Suite**:
+  - **Full-Fledged Calendar**: An integrated calendar that initially supports Google Calendar, with plans to support other providers.
+  - **Contact Management**: A built-in address book that initially syncs with Google Contacts, with plans to expand.
 
 ### Ⅱ. Privacy & Security Features (Our Key Differentiator)
 
